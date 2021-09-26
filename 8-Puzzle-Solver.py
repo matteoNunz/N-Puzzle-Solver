@@ -17,6 +17,13 @@ Calculate the "distance" from the goal:
                                 and the positions in the final configuration
     g-score = number of nodes traversed from the start node to get to the
                 current node
+
+Input-> specified the start configuration as follow
+        1 2 3
+        4 5 6
+        7 8 _
+
+        The size of the matrix is 3, but it can be easily modified
 """
 
 class Node:
