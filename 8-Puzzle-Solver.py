@@ -1,6 +1,6 @@
 """
 Author: Matteo Nunziante
-Date: 26/09/2021
+Date: 27/09/2021
 
 Algorithm: A*
 
@@ -255,6 +255,7 @@ class Puzzle:
 # Start the game
 if __name__ == '__main__':
 
+    # Ask the size to the user
     size = 0
     while True:
         print("Insert the size of the matrix")
@@ -265,6 +266,7 @@ if __name__ == '__main__':
             print("Bad format")
     puz = Puzzle(size)
 
+    # Start the computation
     puz.process()
 
     print("Element in the closed list are: " + str(len(puz.closedList)))
