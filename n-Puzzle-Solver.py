@@ -168,7 +168,7 @@ class Puzzle:
                 # Take the coordinate if the number start[i][j] in the goal configuration
                 x, y = goalNode.find(goal, start[i][j])
                 # Calculate the sqrt of the distance between the numbers
-                value += ((abs(x - i) ** 2 + abs(y - j) ** 2)) ** (1 / 2)
+                value += K * (((abs(x - i) ** 2 + abs(y - j) ** 2)) ** (1 / 2))
         return value
 
     def process(self):
@@ -251,6 +251,9 @@ class Puzzle:
         self.openList.append(node)
         return
 
+
+# K is necessary with size > 3 -> to increase the gap in the calculus of hProportional(x)
+K = 1000
 
 # Start the game
 if __name__ == '__main__':
