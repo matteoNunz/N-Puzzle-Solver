@@ -118,6 +118,8 @@ class Puzzle:
         # Initialize the list as empty
         self.openList = []
         self.closedList = []
+        # K is necessary with size > 3 -> to increase the gap in the calculus of hProportional(x)
+        self.K = 0.1 * 10 ** self.size
 
     def accept(self):
         """
@@ -129,6 +131,50 @@ class Puzzle:
             temp = input().split(" ")
             puz.append(temp)
         return puz
+
+    def checkInput(self, start):
+        """
+        Method that verify if matrix contains all numbers from 0 to size * size
+            -> no missing value or repetition
+        :param start: is the puzzle configuration to verify
+        :return: True if the check is ok, False otherwise
+        """
+        maxNumber = self.size * self.size
+
+        # Check if every numbers from 0 to maxNumber is present in the matrix start
+        for num in range(1, maxNumber + 1):
+            isPresent = False
+            if num == maxNumber:
+                num = '_'
+            else:
+                num = str(num)
+
+            for i in range(0, self.size):
+                for j in range(0, self.size):
+                    if num == start[i][j]:
+                        isPresent = True
+                        continue
+                if isPresent:
+                    continue
+            if not isPresent:
+                return False
+        return True
+
+    def generateGoal(self):
+        """
+        Method use to generate the goal state automatically
+        :return: the goal puzzle
+        """
+        goal = []
+        for i in range(0 , self.size):
+            goalRow = []
+            for j in range(0 , self.size):
+                if i == self.size - 1 and j == self.size - 1:
+                    goalRow.append('_')
+                else:
+                    goalRow.append(str(i * self.size + j + 1))
+            goal.append(goalRow)
+        return goal
 
     def f(self, start, goal):
         """
@@ -168,29 +214,23 @@ class Puzzle:
                 # Take the coordinate if the number start[i][j] in the goal configuration
                 x, y = goalNode.find(goal, start[i][j])
                 # Calculate the sqrt of the distance between the numbers
-                value += K * (((abs(x - i) ** 2 + abs(y - j) ** 2)) ** (1 / 2))
+                value += self.K * (((abs(x - i) ** 2 + abs(y - j) ** 2)) ** (1 / 2))
         return value
 
     def process(self):
         """
-        Accept Start and Goal Puzzle state
+        Accept Start state and verify if it is correct -> no duplicate or missing values
         """
-        print("Enter the start state matrix \n")
-        start = self.accept()
-        # print("Enter the goal state matrix \n")
-        # goal = self.accept()
-        # goal = [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '_']]
+        while True:
+            print("Enter the start state matrix \n")
+            start = self.accept()
+            if self.checkInput(start):
+                break
+            else:
+                print("Missing or duplicate values!")
 
         # Generate the goal matrix
-        goal = []
-        for i in range(0 , self.size):
-            goalRow = []
-            for j in range(0 , self.size):
-                if i == self.size - 1 and j == self.size - 1:
-                    goalRow.append('_')
-                else:
-                    goalRow.append(str(i * self.size + j + 1))
-            goal.append(goalRow)
+        goal = self.generateGoal()
 
         # Create the node
         start = Node(start, 0, 0)
@@ -251,9 +291,6 @@ class Puzzle:
         self.openList.append(node)
         return
 
-
-# K is necessary with size > 3 -> to increase the gap in the calculus of hProportional(x)
-K = 1000
 
 # Start the game
 if __name__ == '__main__':
