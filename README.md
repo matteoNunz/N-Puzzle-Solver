@@ -29,3 +29,13 @@ Input->
         1 2 3
         4 5 6
         7 8 _
+        
+# N-Puzzle-Generator
+
+Use the generator to create random configurations of any size to testify the algorithm
+
+Input ->
+    
+    specify the size of the puzzle
+    
+    specify the number of actions to perform on the puzzle to get the final random configuration
