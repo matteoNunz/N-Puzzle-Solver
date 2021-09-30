@@ -1,6 +1,6 @@
 """
 Author: Matteo Nunziante
-Date: 29/09/2021
+Date: 30/09/2021
 
 Generator of N-puzzle starting configuration
 
